@@ -28,11 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'account.apps.AccountConfig',
+    'images.apps.ImagesConfig', 
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -141,6 +141,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTHENTICATION_BACKENDS = [    
     'django.contrib.auth.backends.ModelBackend',    
     'account.authentication.EmailAuthBackend', 
+    'social_core.backends.facebook.FacebookOAuth2', 
 ] 
 
-# ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+SOCIAL_AUTH_FACEBOOK_KEY = '728721734444757' # Facebook App ID 
+SOCIAL_AUTH_FACEBOOK_SECRET = '9d93d2e5d5d0eacfaab32888abc8adc7' # Facebook App Secret 
