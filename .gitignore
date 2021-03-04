@@ -1,0 +1,13 @@
+__pycache__/
+
+db.sqlite3
+
+.idea/
+
+*.pyc
+
+cert.crt
+
+cert.key
+
+.vscode/
