@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,15 +25,18 @@ SECRET_KEY = '$59k=0ptmlzy^o8s4w2kb^k!=@**7*(zu%)e@viwl2@*l39f4w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions', 
     'account.apps.AccountConfig',
     'images.apps.ImagesConfig', 
-
+    'actions.apps.ActionsConfig', 
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'django_extensions', 
+    'easy_thumbnails', 
 ]
 
 MIDDLEWARE = [
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'socialwebsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,10 +70,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'socialwebsite.context_processors.global_processor',
             ],
         },
     },
 ]
+
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True - If you have set the CSRF_COOKIE_SECURE to be True in your settings file, then the cookie will be marked as "secure" and therefore will need an HTTPS connection.
 
 WSGI_APPLICATION = 'socialwebsite.wsgi.application'
 
@@ -146,3 +153,12 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIAL_AUTH_FACEBOOK_KEY = '728721734444757' # Facebook App ID 
 SOCIAL_AUTH_FACEBOOK_SECRET = '9d93d2e5d5d0eacfaab32888abc8adc7' # Facebook App Secret 
+
+ABSOLUTE_URL_OVERRIDES = {    
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username]) 
+    } 
+
+
+REDIS_HOST = 'localhost' 
+REDIS_PORT = 6379 
+REDIS_DB = 0 
